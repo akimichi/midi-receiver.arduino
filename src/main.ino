@@ -3,6 +3,7 @@
 #include <esp_now.h>
 #include <MIDI.h>
 #include <SoftwareSerial.h>
+#include "common.h"
 #define swrxPin 16
 #define swtxPin 17
 
@@ -24,6 +25,33 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *payload, int data_len) {
     Serial.print(payload[i]);
     Serial.print(" ");
   }
+  switch(payload[0])      // Get the type of the message we caught
+  {
+    case MidiType::NoteOn:
+      Serial.println("NoteOn");
+      // payload: command chan note velocity
+      MIDI.sendNoteOn(payload[2],payload[3],payload[1]);  // ノートオン(pitch 42, velo 127 on channel 1)
+      break;
+    case MidiType::NoteOff:
+      Serial.println("NoteOff");
+      MIDI.sendNoteOff(payload[2],payload[3],payload[1]);  // 
+      break;
+    case MidiType::ProgramChange:
+      Serial.println("ProgramChange");
+      // MIDI.sendProgramChange(chan, program);  // 
+      break;
+    case MidiType::PitchBend:
+      break;
+    case MidiType::AfterTouchChannel:
+      break;
+    case MidiType::AfterTouchPoly:
+      break;
+    case MidiType::ControlChange:
+      break;
+    default:
+      break;
+  }
+  
 
   // Serial.print("Received Data: ");
   // String msg = String((char*) payload);
