@@ -38,7 +38,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *payload, int data_len) {
       break;
     case MidiType::ProgramChange:
       Serial.println("ProgramChange");
-      // MIDI.sendProgramChange(chan, program);  // 
+      MIDI.sendProgramChange(payload[2], payload[1]);  // 
       break;
     case MidiType::PitchBend:
       break;
