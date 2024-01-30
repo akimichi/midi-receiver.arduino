@@ -42,7 +42,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *payload, int data_len) {
       break;
     case MidiType::PitchBend:
       Serial.println("PitchBend");
-      MIDI.sendPitchBend(payload[1], 1);
+      MIDI.sendPitchBend(payload[2]*100, 1);
       break;
     case MidiType::AfterTouchChannel:
       break;
@@ -50,7 +50,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *payload, int data_len) {
       break;
     case MidiType::ControlChange:
       Serial.println("ControlChange");
-      MIDI.sendControlChange(payload[1], payload[2], 1);  // 
+      MIDI.sendControlChange(payload[1], payload[3], 1);  // 
       break;
     default:
       break;
