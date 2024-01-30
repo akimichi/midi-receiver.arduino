@@ -38,7 +38,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *payload, int data_len) {
       break;
     case MidiType::ProgramChange:
       Serial.println("ProgramChange");
-      MIDI.sendProgramChange(payload[2], payload[1]);  // 
+      MIDI.sendProgramChange(payload[2], 1);  // 
       break;
     case MidiType::PitchBend:
       Serial.println("PitchBend");
@@ -98,6 +98,7 @@ void setup() {
   esp_now_register_recv_cb(OnDataRecv);
 
   Serial.println("setup completed");
+  MIDI.sendProgramChange(1, 1);  // 
 }
 
 int program_number = 1;
