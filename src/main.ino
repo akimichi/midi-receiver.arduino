@@ -27,6 +27,9 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *payload, int data_len) {
   }
   switch(payload[0])      // Get the type of the message we caught
   {
+    case MidiType::InvalidType: // 全音を消音する
+      MIDI.sendControlChange(123,0,1);
+      break;
     case MidiType::NoteOn:
       Serial.println("NoteOn");
       // payload: command chan note velocity
